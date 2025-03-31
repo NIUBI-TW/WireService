@@ -119,11 +119,11 @@
             box-shadow: 0 0 0 2px rgba(0, 210, 211, 0.3);
         }
         
-        /* 卡片式設計取代表格 */
+        /* 卡片式設計 */
         .string-list {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 15px;
             margin-bottom: 30px;
         }
         
@@ -133,7 +133,6 @@
             padding: 15px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
             border-left: 4px solid var(--accent-color);
-            margin-bottom: 15px;
         }
         
         .brand-header {
@@ -154,15 +153,19 @@
             font-weight: bold;
         }
         
+        .strings-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 10px;
+        }
+        
         .string-card {
             background-color: var(--card-bg);
             border-radius: 8px;
             padding: 12px;
-            margin-bottom: 8px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
             border: 1px solid var(--border-color);
             transition: all 0.2s ease;
         }
@@ -173,8 +176,6 @@
         
         .string-info {
             flex: 1;
-            min-width: 150px;
-            margin-bottom: 5px;
         }
         
         .string-model {
@@ -299,10 +300,6 @@
                 padding: 15px;
             }
             
-            .string-model {
-                font-size: 1rem;
-            }
-            
             .service-price {
                 font-size: 1.3rem;
                 gap: 30px;
@@ -321,7 +318,7 @@
             }
         }
         
-        /* 桌面模式 - 切換回表格顯示 */
+        /* 桌面模式 */
         @media (min-width: 992px) {
             .container {
                 padding: 30px;
@@ -335,81 +332,8 @@
                 font-size: 1.1rem;
             }
             
-            /* 桌面版顯示表格 */
-            .string-list.desktop-only {
-                display: block;
-                overflow-x: auto;
-                margin-bottom: 40px;
-                border-radius: 10px;
-                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-                -webkit-overflow-scrolling: touch;
-            }
-            
-            .string-list.desktop-only table {
-                width: 100%;
-                border-collapse: collapse;
-                min-width: 800px;
-            }
-            
-            .string-list.desktop-only th, 
-            .string-list.desktop-only td {
-                padding: 15px 20px;
-                text-align: left;
-                border-bottom: 1px solid var(--border-color);
-                font-size: 1rem;
-            }
-            
-            .string-list.desktop-only th {
-                background-color: var(--primary-color);
-                color: white;
-                font-weight: 600;
-                position: sticky;
-                top: 0;
-                text-transform: uppercase;
-                font-size: 0.85rem;
-                letter-spacing: 0.5px;
-            }
-            
-            .string-list.desktop-only tr {
-                background-color: var(--card-bg);
-                transition: all 0.2s ease;
-            }
-            
-            .string-list.desktop-only tr:nth-child(even) {
-                background-color: rgba(53, 59, 72, 0.5);
-            }
-            
-            .string-list.desktop-only tr:hover {
-                background-color: rgba(0, 168, 255, 0.1);
-            }
-            
-            .string-list.desktop-only .brand-row {
-                background-color: rgba(0, 151, 230, 0.2) !important;
-                font-weight: bold;
-                border-left: 4px solid var(--accent-color);
-            }
-            
-            .string-list.desktop-only .brand-row td {
-                padding-top: 18px;
-                padding-bottom: 18px;
-                font-size: 1.1rem;
-            }
-            
-            .string-list.desktop-only .brand-logo {
-                width: 90px;
-                margin-right: 15px;
-            }
-            
-            .string-list.desktop-only .price-highlight {
-                color: var(--accent-color);
-                font-weight: 600;
-                font-family: 'Orbitron', sans-serif;
-                letter-spacing: 1px;
-            }
-            
-            /* 隱藏手機版卡片 */
-            .string-list.mobile-only {
-                display: none;
+            .strings-container {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             }
         }
         
@@ -492,12 +416,11 @@
             <span>全換拍釘: 250元</span>
         </div>
         
-        <!-- 手機版卡片式設計 -->
-        <div class="string-list mobile-only" id="mobile-string-list">
+        <!-- 卡片式設計 -->
+        <div class="string-list" id="string-list">
             <!-- 內容由JS動態生成 -->
         </div>
         
-                
         <h2 style="color: var(--accent-color); margin-top: 30px; border-bottom: 1px solid var(--accent-color); padding-bottom: 8px; font-size: 1.3rem;">合作夥伴</h2>
         <div class="stores">
             <div class="store-card">
@@ -517,7 +440,7 @@
             const brandFilter = document.getElementById('brand-filter');
             const diameterFilter = document.getElementById('diameter-filter');
             const priceFilter = document.getElementById('price-filter');
-            const mobileStringList = document.getElementById('mobile-string-list');
+            const stringList = document.getElementById('string-list');
             
             // 所有羽球線數據
             const stringData = [
@@ -644,9 +567,14 @@
                 }
             ];
             
-            // 渲染手機版卡片
-            function renderMobileCards(data) {
-                mobileStringList.innerHTML = '';
+            // 渲染卡片
+            function renderCards(data) {
+                stringList.innerHTML = '';
+                
+                if (data.length === 0) {
+                    stringList.innerHTML = '<div style="text-align: center; padding: 20px; color: #a4b0be;">沒有符合條件的產品</div>';
+                    return;
+                }
                 
                 data.forEach(brand => {
                     const brandCard = document.createElement('div');
@@ -678,12 +606,12 @@
                     });
                     
                     brandCard.appendChild(stringsContainer);
-                    mobileStringList.appendChild(brandCard);
+                    stringList.appendChild(brandCard);
                 });
             }
             
             // 初始化渲染
-            renderMobileCards(stringData);
+            renderCards(stringData);
             
             function applyFilters() {
                 const brandValue = brandFilter.value;
@@ -713,46 +641,7 @@
                     .filter(brand => brand.strings.length > 0);
                 
                 // 重新渲染
-                renderMobileCards(filteredData);
-                
-                // 桌面版表格篩選 (保持原有邏輯)
-                const rows = document.querySelectorAll('.desktop-only tbody tr');
-                
-                let currentBrand = '';
-                let currentBrandRow = null;
-                let hasVisibleProductsForBrand = false;
-                
-                rows.forEach(row => {
-                    if (row.classList.contains('brand-row')) {
-                        currentBrandRow = row;
-                        currentBrand = row.querySelector('span').textContent.trim();
-                        hasVisibleProductsForBrand = false;
-                        row.style.display = 'none';
-                    } else {
-                        const diameter = row.cells[2].textContent;
-                        const price = parseInt(row.cells[3].textContent);
-                        
-                        let showProduct = (!brandValue || currentBrand === brandValue) && 
-                                         (!diameterValue || diameter.includes(diameterValue)) &&
-                                         (!priceRange || (() => {
-                                             const [min, max] = priceRange.split('-').map(Number);
-                                             return price >= min && price <= max;
-                                         })());
-                        
-                        if (showProduct) {
-                            hasVisibleProductsForBrand = true;
-                            row.style.display = '';
-                        } else {
-                            row.style.display = 'none';
-                        }
-                    }
-                    
-                    const nextRow = row.nextElementSibling;
-                    if (currentBrandRow && (!nextRow || nextRow.classList.contains('brand-row'))) {
-                        currentBrandRow.style.display = hasVisibleProductsForBrand ? '' : 'none';
-                        currentBrandRow = null;
-                    }
-                });
+                renderCards(filteredData);
             }
             
             // 初始化時執行一次篩選
