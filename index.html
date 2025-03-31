@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>台灣雞毛哥穿線價目表</title>
+    <style>
+        :root {
+            --primary-color: #00a8ff;
+            --secondary-color: #0097e6;
+            --accent-color: #00d2d3;
+            --dark-color: #2f3640;
+            --light-color: #f5f6fa;
+            --text-color: #f5f6fa;
+            --card-bg: rgba(47, 54, 64, 0.8);
+            --border-color: #353b48;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Noto Sans TC', 'Segoe UI', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1e272e, #2f3640);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px;
+            background-color: rgba(47, 54, 64, 0.7);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--accent-color);
+            position: relative;
+        }
+        
+        header::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: var(--accent-color);
+            border-radius: 3px;
+        }
+        
+        h1 {
+            color: var(--text-color);
+            margin-bottom: 10px;
+            font-size: 2.5rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+        
+        .subtitle {
+            color: var(--accent-color);
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+        }
+        
+        .filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--border-color);
+        }
+        
+        .filter-group {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--accent-color);
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+        }
+        
+        select, input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 1rem;
+            background-color: var(--dark-color);
+            color: var(--text-color);
+            transition: all 0.3s ease;
+        }
+        
+        select:focus, input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 2px rgba(0, 210, 211, 0.3);
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            margin-bottom: 40px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 800px;
+        }
+        
+        th, td {
+            padding: 15px 20px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        th {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+        }
+        
+        tr {
+            background-color: var(--card-bg);
+            transition: all 0.2s ease;
+        }
+        
+        tr:nth-child(even) {
+            background-color: rgba(53, 59, 72, 0.5);
+        }
+        
+        tr:hover {
+            background-color: rgba(0, 168, 255, 0.1);
+        }
+        
+        .brand-row {
+            background-color: rgba(0, 151, 230, 0.2) !important;
+            font-weight: bold;
+            border-left: 4px solid var(--accent-color);
+        }
+        
+        .brand-row td {
+            padding-top: 18px;
+            padding-bottom: 18px;
+            font-size: 1.1rem;
+        }
+        
+        .brand-logo {
+            width: 90px;
+            height: auto;
+            margin-right: 15px;
+            vertical-align: middle;
+            filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.3));
+        }
+        
+        .service-price {
+            text-align: center;
+            margin: 30px 0;
+            font-size: 1.3rem;
+            color: var(--accent-color);
+            font-weight: bold;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+        
+        .service-price::before, .service-price::after {
+            content: '//';
+            color: var(--primary-color);
+            margin: 0 15px;
+            position: relative;
+            top: -2px;
+        }
+        
+        .price-highlight {
+            color: var(--accent-color);
+            font-weight: 600;
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1px;
+        }
+        
+        .stores {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+            margin-top: 40px;
+        }
+        
+        .store-card {
+            flex: 1;
+            min-width: 300px;
+            background: linear-gradient(135deg, var(--card-bg), rgba(47, 54, 64, 0.6));
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .store-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+        
+        .store-name {
+            font-size: 1.3rem;
+            color: var(--text-color);
+            margin-bottom: 12px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        
+        .store-address {
+            color: #a4b0be;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        
+        .store-address::before {
+            content: '📍 ';
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            .filters {
+                flex-direction: column;
+                padding: 15px;
+            }
+            
+            .filter-group {
+                width: 100%;
+            }
+            
+            th, td {
+                padding: 12px 15px;
+            }
+            
+            .brand-logo {
+                width: 70px;
+            }
+            
+            .service-price {
+                font-size: 1.1rem;
+            }
+        }
+        
+        /* 動畫效果 */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .container {
+            animation: fadeIn 0.6s ease-out;
+        }
+        
+        /* 霓虹效果 */
+        .neon-text {
+            text-shadow: 0 0 5px var(--primary-color), 
+                         0 0 10px var(--primary-color), 
+                         0 0 20px var(--primary-color);
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1 class="neon-text">台灣雞毛哥穿線價目表</h1>
+            <p class="subtitle">全台庫存最多，種類最齊全</p>
+        </header>
+        
+        <div class="filters">
+            <div class="filter-group">
+                <label for="brand-filter"><i class="fas fa-tag"></i> 品牌</label>
+                <select id="brand-filter">
+                    <option value="">所有品牌</option>
+                    <option value="VICTOR">VICTOR</option>
+                    <option value="LI-LING">LI-LING</option>
+                    <option value="YONEX">YONEX</option>
+                    <option value="GOSEN">GOSEN</option>
+                    <option value="KIZUNA">KIZUNA</option>
+                    <option value="牛逼體育">牛逼體育</option>
+                    <option value="Toalson">Toalson</option>
+                    <option value="Kawasaki">Kawasaki</option>
+                    <option value="ASHAWAYA">ASHAWAYA</option>
+                </select>
+            </div>
+            
+            <div class="filter-group">
+                <label for="diameter-filter"><i class="fas fa-ruler-horizontal"></i> 線徑</label>
+                <select id="diameter-filter">
+                    <option value="">所有線徑</option>
+                    <option value="0.58">0.58mm</option>
+                    <option value="0.61">0.61mm</option>
+                    <option value="0.62">0.62mm</option>
+                    <option value="0.63">0.63mm</option>
+                    <option value="0.64">0.64mm</option>
+                    <option value="0.65">0.65mm</option>
+                    <option value="0.66">0.66mm</option>
+                    <option value="0.67">0.67mm</option>
+                    <option value="0.68">0.68mm</option>
+                    <option value="0.69">0.69mm</option>
+                    <option value="0.70">0.70mm</option>
+                </select>
+            </div>
+            
+            <div class="filter-group">
+                <label for="price-filter"><i class="fas fa-dollar-sign"></i> 價格範圍</label>
+                <select id="price-filter">
+                    <option value="">所有價格</option>
+                    <option value="200-300">200-300元</option>
+                    <option value="300-350">300-350元</option>
+                    <option value="350-400">350-400元</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="service-price">
+            <span>自備線穿線: 180元</span>
+            <span>全換拍釘: 250元</span>
+        </div>
+        
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>品牌</th>
+                        <th>型號</th>
+                        <th>線徑</th>
+                        <th>價格</th>
+                        <th>備註</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- VICTOR 品牌 -->
+                    <tr class="brand-row">
+                        <td colspan="5">
+                            <img src="victor.png" alt="VICTOR" class="brand-logo">
+                            <span>VICTOR</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>VS-100</td>
+                        <td>0.70mm</td>
+                        <td class="price-highlight">200</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>VBS-70</td>
+                        <td>0.70mm</td>
+                        <td class="price-highlight">250</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>VBS-70P</td>
+                        <td>0.70mm</td>
+                        <td class="price-highlight">250</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>VBS61</td>
+                        <td>0.61mm</td>
+                        <td class="price-highlight">400</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>VBS-68P</td>
+                        <td>0.68mm</td>
+                        <td class="price-highlight">400</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>VBS-68</td>
+                        <td>0.68mm</td>
+                        <td class="price-highlight">350</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>VBS-66N</td>
+                        <td>0.66mm</td>
+                        <td class="price-highlight">350</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>VBS-63</td>
+                        <td>0.63mm</td>
+                        <td class="price-highlight">350</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>NS-900</td>
+                        <td>0.66mm</td>
+                        <td class="price-highlight">300</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>VBS-69N</td>
+                        <td>0.69mm</td>
+                        <td class="price-highlight">300</td>
+                        <td></td>
+                    </tr>
+                    
+                    <!-- LI-LING 品牌 -->
+                    <tr class="brand-row">
+                        <td colspan="5">
+                            <img src="li-ling.png" alt="LI-LING" class="brand-logo">
+                            <span>LI-LING</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>一號線</td>
+                        <td>0.65mm</td>
+                        <td class="price-highlight">300</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>N58</td>
+                        <td>0.58mm</td>
+                        <td class="price-highlight">350</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>N61</td>
+                        <td>0.61mm</td>
+                        <td class="price-highlight">400</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>N63</td>
+                        <td>0.63mm</td>
+                        <td class="price-highlight">400</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>N65</td>
+                        <td>0.65mm</td>
+                        <td class="price-highlight">350</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>N68</td>
+                        <td>0.68mm</td>
+                        <td class="price-highlight">350</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>N69</td>
+                        <td>0.69mm</td>
+                        <td class="price-highlight">350</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>N70</td>
+                        <td>0.70mm</td>
+                        <td class="price-highlight">250</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>L67</td>
+                        <td>0.67mm</td>
+                        <td class="price-highlight">300</td>
+                        <td></td>
+                    </tr>
+                    
+                    <!-- 牛逼體育 品牌 -->
+                    <tr class="brand-row">
+                        <td colspan="5">
+                            <img src="nbty.png" alt="牛逼體育" class="brand-logo">
+                            <span>牛逼體育</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>日製無標線</td>
+                        <td>0.66mm</td>
+                        <td class="price-highlight">250</td>
+                        <td></td>
+                    </tr>
+                    
+                    <!-- YONEX 品牌 -->
+                    <tr class="brand-row">
+                        <td colspan="5">
+                            <img src="yonex.png" alt="YONEX" class="brand-logo">
+                            <span>YONEX</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>BG65</td>
+                        <td>0.70mm</td>
+                        <td class="price-highlight">250</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>BG65TI</td>
+                        <td>0.70mm</td>
+                        <td class="price-highlight">350</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>BG66UM</td>
+                        <td>0.65mm</td>
+                        <td class="price-highlight">350</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>BG66F</td>
+                        <td>0.65mm</td>
+                        <td class="price-highlight">400</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>BG80</td>
+                        <td>0.68mm</td>
+                        <td class="price-highlight">350</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>BG80P</td>
+                        <td>0.68mm</td>
+                        <td class="price-highlight">400</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>NBG95</td>
+                        <td>0.69mm</td>
+                        <td class="price-highlight">350</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>NBG98</td>
+                        <td>0.66mm</td>
+                        <td class="price-highlight">350</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>BGAS</td>
+                        <td>0.61mm</td>
+                        <td class="price-highlight">350</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>EXB63</td>
+                        <td>0.63mm</td>
+                        <td class="price-highlight">400</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>EXB65</td>
+                        <td>0.65mm</td>
+                        <td class="price-highlight">350</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>EXB68</td>
+                        <td>0.68mm</td>
+                        <td class="price-highlight">350</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>BG-久</td>
+                        <td>0.70mm</td>
+                        <td class="price-highlight">300</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>BG-彈</td>
+                        <td>0.66mm</td>
+                        <td class="price-highlight">300</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>AB線</td>
+                        <td>0.61/0.67mm</td>
+                        <td class="price-highlight">400</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>ABBT線</td>
+                        <td>0.61/0.72mm</td>
+                        <td class="price-highlight">400</td>
+                        <td></td>
+                    </tr>
+                    
+                    <!-- Toalson 品牌 -->
+                    <tr class="brand-row">
+                        <td colspan="5">
+                            <img src="toalson.png" alt="Toalson" class="brand-logo">
+                            <span>Toalson</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>ION65</td>
+                        <td>0.65mm</td>
+                        <td class="price-highlight">300</td>
+                        <td></td>
+                    </tr>
+                    
+                    <!-- Kawasaki 品牌 -->
+                    <tr class="brand-row">
+                        <td colspan="5">
+                            <img src="kawasaki.png" alt="Kawasaki" class="brand-logo">
+                            <span>Kawasaki</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>ELITE61</td>
+                        <td>0.61mm</td>
+                        <td class="price-highlight">400</td>
+                        <td></td>
+                    </tr>
+                    
+                    <!-- ASHAWAYA 品牌 -->
+                    <tr class="brand-row">
+                        <td colspan="5">
+                            <img src="ashaway.png" alt="ASHAWAYA" class="brand-logo">
+                            <span>ASHAWAYA</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>64TX</td>
+                        <td>0.64mm</td>
+                        <td class="price-highlight">350</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>68TX</td>
+                        <td>0.68mm</td>
+                        <td class="price-highlight">350</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>62FIRE</td>
+                        <td>0.62mm</td>
+                        <td class="price-highlight">350</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>66FIRE</td>
+                        <td>0.66mm</td>
+                        <td class="price-highlight">350</td>
+                        <td></td>
+                    </tr>
+                    
+                    <!-- GOSEN 品牌 -->
+                    <tr class="brand-row">
+                        <td colspan="5">
+                            <img src="gosen.png" alt="GOSEN" class="brand-logo">
+                            <span>GOSEN</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>RYZONIC 58</td>
+                        <td>0.58mm</td>
+                        <td class="price-highlight">350</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>RYZONIC 65</td>
+                        <td>0.65mm</td>
+                        <td class="price-highlight">350</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>G-PRO70</td>
+                        <td>0.70mm</td>
+                        <td class="price-highlight">300</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>G-PRO66</td>
+                        <td>0.66mm</td>
+                        <td class="price-highlight">300</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>G-TONE69</td>
+                        <td>0.69mm</td>
+                        <td class="price-highlight">300</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>G-TONE65</td>
+                        <td>0.65mm</td>
+                        <td class="price-highlight">300</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>G-TONE58</td>
+                        <td>0.58mm</td>
+                        <td class="price-highlight">300</td>
+                        <td></td>
+                    </tr>
+                    
+                    <!-- KIZUNA 品牌 -->
+                    <tr class="brand-row">
+                        <td colspan="5">
+                            <img src="kizuna.png" alt="KIZUNA" class="brand-logo">
+                            <span>KIZUNA</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>Z58</td>
+                        <td>0.58mm</td>
+                        <td class="price-highlight">400</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>Z61(D61)</td>
+                        <td>0.61mm</td>
+                        <td class="price-highlight">400</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>Z63X</td>
+                        <td>0.63mm</td>
+                        <td class="price-highlight">400</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>Z65</td>
+                        <td>0.65mm</td>
+                        <td class="price-highlight">400</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>Z67</td>
+                        <td>0.67mm</td>
+                        <td class="price-highlight">400</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>Z69</td>
+                        <td>0.69mm</td>
+                        <td class="price-highlight">400</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>Z69TI</td>
+                        <td>0.69mm</td>
+                        <td class="price-highlight">400</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>Z66(D66)</td>
+                        <td>0.66mm</td>
+                        <td class="price-highlight">400</td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <h2 style="color: var(--accent-color); margin-top: 40px; border-bottom: 1px solid var(--accent-color); padding-bottom: 10px;">合作夥伴</h2>
+        <div class="stores">
+            <div class="store-card">
+                <div class="store-name">前鎮店</div>
+                <div class="store-address">高雄市前鎮區二聖二路215號</div>
+            </div>
+            
+            <div class="store-card">
+                <div class="store-name">苓雅店</div>
+                <div class="store-address">高雄市苓雅區中正一路125號</div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const brandFilter = document.getElementById('brand-filter');
+            const diameterFilter = document.getElementById('diameter-filter');
+            const priceFilter = document.getElementById('price-filter');
+            
+            function applyFilters() {
+                const brandValue = brandFilter.value;
+                const diameterValue = diameterFilter.value;
+                const priceRange = priceFilter.value;
+                const rows = document.querySelectorAll('tbody tr');
+                
+                let currentBrand = '';
+                let currentBrandRow = null;
+                let hasVisibleProductsForBrand = false;
+                
+                rows.forEach(row => {
+                    if (row.classList.contains('brand-row')) {
+                        // 處理品牌行
+                        currentBrandRow = row;
+                        currentBrand = row.querySelector('span').textContent.trim();
+                        hasVisibleProductsForBrand = false;
+                        
+                        // 先隱藏品牌行，等檢查完產品後再決定是否顯示
+                        row.style.display = 'none';
+                    } else {
+                        // 處理產品行
+                        const diameter = row.cells[2].textContent;
+                        const price = parseInt(row.cells[3].textContent);
+                        
+                        let showProduct = (!brandValue || currentBrand === brandValue) && 
+                                         (!diameterValue || diameter.includes(diameterValue)) &&
+                                         (!priceRange || (() => {
+                                             const [min, max] = priceRange.split('-').map(Number);
+                                             return price >= min && price <= max;
+                                         })());
+                        
+                        if (showProduct) {
+                            hasVisibleProductsForBrand = true;
+                            row.style.display = '';
+                        } else {
+                            row.style.display = 'none';
+                        }
+                    }
+                    
+                    // 檢查是否是當前品牌的最後一個產品行
+                    const nextRow = row.nextElementSibling;
+                    if (currentBrandRow && (!nextRow || nextRow.classList.contains('brand-row'))) {
+                        // 如果有可見產品，則顯示品牌行
+                        currentBrandRow.style.display = hasVisibleProductsForBrand ? '' : 'none';
+                        currentBrandRow = null;
+                    }
+                });
+            }
+            
+            // 初始化時執行一次篩選
+            applyFilters();
+            
+            // 綁定事件監聽器
+            brandFilter.addEventListener('change', applyFilters);
+            diameterFilter.addEventListener('change', applyFilters);
+            priceFilter.addEventListener('change', applyFilters);
+        });
+    </script>
+    
+</body>
+</html>
